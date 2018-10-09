@@ -4,7 +4,7 @@ import java.util.*;
  * Allan Beckman
  * E01238245
  * assignment 0927
- * https://github.com/abeckma2/Class571
+ * https://github.com/abeckma2/Class571/blob/master/COSC571/Project2/Project2.java
  * records in random access files
  */
 public class Project2
