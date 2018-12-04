@@ -109,7 +109,9 @@ public class main
                 {
                     if(tableR[i]==tableS[j])
                     {
-                        System.out.println(tableR[i]+"      "+tableS[j]);
+                        System.out.println(tableR[i+1]+"      S="+tableS[j]);
+                        System.out.println(tableR[i+1]+"      S="+tableS[j+1]);
+                        System.out.println(tableR[i+2]+"      S="+tableS[j+2]);
                     }
                 }
             }
