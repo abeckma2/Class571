@@ -9,20 +9,17 @@ import java.util.*;
  */
 public class main
 {
-    // instance variables - replace the example below with your own
-    
     public static void main(String[] args)
     {
         int x;
         String character="";
-        long sixtyforbit;
         Random rand = new Random();
         Object[] tableR=new Object[10000];
         Object[] tableS=new Object[10000];
-        Object[] tableS1=new Object[10000];
+        Hashtable<Integer, String> tableS1=new Hashtable<Integer,String>();
         String a="qwertyuiopasdfghjklzxcvbnm";
         double part=0;
-        int numTuples=5;
+        int numTuples=300;
         for(int i=1;i<=numTuples;i++)//makes table R as unsorted array and print it
         {
             x=rand.nextInt(10);
@@ -48,7 +45,6 @@ public class main
         {
             x=rand.nextInt(10);
             tableS[i]=x;
-            tableS1[i]=Integer.hashCode(x);//prepare as hash
             System.out.print(tableS[i]+" ");
             i++;
             for(int j =1;j<=1000;j++)
@@ -57,44 +53,40 @@ public class main
                 
             }
             tableS[i]=character;
-            tableS1[i]=character;
+            tableS1.put(x,character);
             System.out.print(tableS[i]+" ");
             i++;
             part=part+1;
             tableS[i]=part;
-            tableS1[i]=part;
             System.out.println(tableS[i]);
             character="";
         }
         System.out.println();
-        for(int i=1;i<=numTuples;i++)//print out hash
+        System.out.println(tableS1);
+        /*for(int i=1;i<=numTuples;i++)//print out hash
         {
             if(i%3==0)
             {
-                System.out.println(tableS1[i]+" ");
+                System.out.println(tableS1);
             }
             else
             {
                 System.out.print(tableS1[i]+" ");
             }
-        }
+        }*/
         System.out.println();
         long s=System.nanoTime();
         for(int i=1;i<=numTuples;i++)//does equijoin on hash
         {
-            for(int j=1;j<=numTuples;j++)
-            {
-                if(i%3==0 &&j%3==0)
+                if(i%3==0)
                 {
-                    if(tableR[i]==tableS1[j])
+                    if(tableR[i]==tableS1.get(i))
                     {
-                        System.out.println(tableR[i]+"      S="+tableS1[j]);
-                        System.out.println(tableR[i+1]+"      S="+tableS1[j+1]);
-                        System.out.println(tableR[i+2]+"      S="+tableS1[j+2]);
+                        System.out.println(tableR[i]+"      S="+tableS1.get(i));
+                        System.out.println(tableR[i+1]);
+                        System.out.println(tableR[i+2]);
                     }
                 }
-                
-            }
         }
         long f=System.nanoTime();
         long time=f-s;//measure time for equijoin on hash
