@@ -1,1 +1,121 @@
-
+import java.util.*;
+/**
+ * Allan Beckman
+ * E01238245
+ * Fall 20218
+ * Cosc571
+ * hw1115
+ * https://github.com/abeckma2/Class571/blob/master/COSC571/Project3/Project3.java
+ * github.com
+ */
+public class main
+{
+    // instance variables - replace the example below with your own
+    
+    public static void main(String[] args)
+    {
+        int x;
+        String character="";
+        long sixtyforbit;
+        Random rand = new Random();
+        Object[] tableR=new Object[10000];
+        Object[] tableS=new Object[10000];
+        Object[] tableS1=new Object[10000];
+        String a="qwertyuiopasdfghjklzxcvbnm";
+        double part=0;
+        for(int i=1;i<=21;i++)//makes table R as unsorted array
+        {
+            x=rand.nextInt(1000);
+            tableR[i]=x;
+            System.out.print(tableR[i]+" ");
+            i++;
+            for(int j =1;j<=1000;j++)//make 1000 charater string
+            {
+                character=character+a.charAt(rand.nextInt(26));
+                
+            }
+            tableR[i]=character;
+            System.out.print(tableR[i]+" ");
+            i++;
+            part=part+1;
+            tableR[i]=part;
+            System.out.println(tableR[i]);
+            character="";
+        }
+        System.out.println();
+        part=0;
+        for(int i=1;i<=21;i++)//make table S as both unsorted array and hash
+        {
+            x=rand.nextInt(1000);
+            tableS[i]=x;
+            tableS1[i]=Integer.hashCode(x);
+            System.out.print(tableS[i]+" ");
+            i++;
+            for(int j =1;j<=1000;j++)
+            {
+                character=character+a.charAt(rand.nextInt(26));
+                
+            }
+            tableS[i]=character;
+            tableS1[i]=character;
+            System.out.print(tableS[i]+" ");
+            i++;
+            part=part+1;
+            tableS[i]=part;
+            tableS1[i]=part;
+            System.out.println(tableS[i]);
+            character="";//reset character
+        }
+        System.out.println();
+        for(int i=1;i<=21;i++)//print out hash
+        {
+            if(i%3==0)
+            {
+                System.out.println(tableS1[i]+" ");
+            }
+            else
+            {
+                System.out.print(tableS1[i]+" ");
+            }
+        }
+        System.out.println();
+        //index=Integer.hashCode(x);
+        long s=System.nanoTime();
+        for(int i=1;i<=21;i++)//does equijoin on hash
+        {
+            for(int j=1;j<=21;j++)
+            {
+                if(i%3==0 &&j%3==0)
+                {
+                    if(tableR[i]==tableS1[j])
+                    {
+                        System.out.println(tableR[i]+"      S="+tableS1[j]);
+                        System.out.println(tableR[i+1]+"      S="+tableS1[j+1]);
+                        System.out.println(tableR[i+2]+"      S="+tableS1[j+2]);
+                    }
+                }
+                
+            }
+        }
+        long f=System.nanoTime();
+        long time=f-s;
+        System.out.println("time for hash is "+time+ " nanoseconds");
+        s=System.nanoTime();
+        for(int i=1;i<=21;i++)//does equijoin on unsorted
+        {
+            for(int j=1;j<=21;j++)
+            {
+                if(i%3==0&&j%3==0)
+                {
+                    if(tableR[i]==tableS[j])
+                    {
+                        System.out.println(tableR[i]+"      "+tableS[j]);
+                    }
+                }
+            }
+        }
+        f=System.nanoTime();
+        time=f-s;
+        System.out.println("time for 2 unsorted arrays is "+time+ " nanoseconds");
+    }
+}
