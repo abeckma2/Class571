@@ -22,7 +22,7 @@ public class main
         Object[] tableS1=new Object[10000];
         String a="qwertyuiopasdfghjklzxcvbnm";
         double part=0;
-        for(int i=1;i<=21;i++)//makes table R as unsorted array
+        for(int i=1;i<=21;i++)//makes table R as unsorted array and print it
         {
             x=rand.nextInt(1000);
             tableR[i]=x;
@@ -39,7 +39,7 @@ public class main
             part=part+1;
             tableR[i]=part;
             System.out.println(tableR[i]);
-            character="";
+            character="";//reset character
         }
         System.out.println();
         part=0;
@@ -47,7 +47,7 @@ public class main
         {
             x=rand.nextInt(1000);
             tableS[i]=x;
-            tableS1[i]=Integer.hashCode(x);
+            tableS1[i]=Integer.hashCode(x);//prepare as hash
             System.out.print(tableS[i]+" ");
             i++;
             for(int j =1;j<=1000;j++)
@@ -63,7 +63,7 @@ public class main
             tableS[i]=part;
             tableS1[i]=part;
             System.out.println(tableS[i]);
-            character="";//reset character
+            character="";
         }
         System.out.println();
         for(int i=1;i<=21;i++)//print out hash
@@ -78,7 +78,6 @@ public class main
             }
         }
         System.out.println();
-        //index=Integer.hashCode(x);
         long s=System.nanoTime();
         for(int i=1;i<=21;i++)//does equijoin on hash
         {
@@ -97,7 +96,7 @@ public class main
             }
         }
         long f=System.nanoTime();
-        long time=f-s;
+        long time=f-s;//measure time for equijoin on hash
         System.out.println("time for hash is "+time+ " nanoseconds");
         s=System.nanoTime();
         for(int i=1;i<=21;i++)//does equijoin on unsorted
@@ -116,7 +115,7 @@ public class main
             }
         }
         f=System.nanoTime();
-        time=f-s;
+        time=f-s;//measure time for equijoin on unsorted
         System.out.println("time for 2 unsorted arrays is "+time+ " nanoseconds");
     }
 }
