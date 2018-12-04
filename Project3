@@ -22,7 +22,8 @@ public class main
         Object[] tableS1=new Object[10000];
         String a="qwertyuiopasdfghjklzxcvbnm";
         double part=0;
-        for(int i=1;i<=300;i++)//makes table R as unsorted array and print it
+        int numTuples=60;
+        for(int i=1;i<=numTuples;i++)//makes table R as unsorted array and print it
         {
             x=rand.nextInt(1000);
             tableR[i]=x;
@@ -43,7 +44,7 @@ public class main
         }
         System.out.println();
         part=0;
-        for(int i=1;i<=300;i++)//make table S as both unsorted array and hash
+        for(int i=1;i<=numTuples;i++)//make table S as both unsorted array and hash
         {
             x=rand.nextInt(1000);
             tableS[i]=x;
@@ -66,7 +67,7 @@ public class main
             character="";
         }
         System.out.println();
-        for(int i=1;i<=300;i++)//print out hash
+        for(int i=1;i<=numTuples;i++)//print out hash
         {
             if(i%3==0)
             {
@@ -79,9 +80,9 @@ public class main
         }
         System.out.println();
         long s=System.nanoTime();
-        for(int i=1;i<=300;i++)//does equijoin on hash
+        for(int i=1;i<=numTuples;i++)//does equijoin on hash
         {
-            for(int j=1;j<=300;j++)
+            for(int j=1;j<=numTuples;j++)
             {
                 if(i%3==0 &&j%3==0)
                 {
@@ -99,9 +100,9 @@ public class main
         long time=f-s;//measure time for equijoin on hash
         System.out.println("time for hash is "+time+ " nanoseconds");
         s=System.nanoTime();
-        for(int i=1;i<=300;i++)//does equijoin on unsorted
+        for(int i=1;i<=numTuples;i++)//does equijoin on unsorted
         {
-            for(int j=1;j<=300;j++)
+            for(int j=1;j<=numTuples;j++)
             {
                 if(i%3==0&&j%3==0)
                 {
