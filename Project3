@@ -22,7 +22,7 @@ public class main
         Hashtable<Integer,String> tableS1=new Hashtable<Integer,String>();
         String a="qwertyuiopasdfghjklzxcvbnm";
         double part=0;
-        int numTuples=360;
+        int numTuples=15;
         for(int i=1;i<=numTuples;i++)//makes table R as unsorted array and print it
         {
             x=rand.nextInt(10);
