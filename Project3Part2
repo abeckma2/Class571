@@ -1,0 +1,157 @@
+import java.util.*;
+import java.io.*;
+/**
+ * Allan Beckman
+ * E01238245
+ * Fall 20218
+ * Cosc571
+ * hw1115
+ * https://github.com/abeckma2/Class571/blob/master/Project3part2
+ */
+
+public class main
+{
+    // instance variables - replace the example below with your own
+    
+        public static void main(String[] args)
+        {
+            try
+            {
+            int x;
+            String character="";
+            int numTuples=30;
+            Random rand = new Random();
+            String[] tableR=new String[100000];
+            String[] tableS=new String[100000];
+            Object[] array1=new Object[10000];
+            Object[] array2=new Object[10000];
+            String all="";
+            String allS[]=new String[(numTuples/3)];
+            String all2="";
+            RandomAccessFile fileR=new RandomAccessFile("fileR", "rw");
+            RandomAccessFile fileS=new RandomAccessFile("fileS", "rw");
+            RandomAccessFile fileS1=new RandomAccessFile("fileS1", "rw");
+            Hashtable<Integer,String> tableS1=new Hashtable<Integer,String>();
+            Hashtable<Integer,String> hash=new Hashtable<Integer,String>();
+            String a="qwertyuiopasdfghjklzxcvbnm";
+            double part=0;
+            int track=0;
+            int track2=0;
+            for(int i=1;i<=numTuples;i++)//makes table R as unsorted array and print it
+            {
+                x=rand.nextInt(2);
+                //System.out.println(x);
+                i++;
+                for(int j =1;j<=1000;j++)//make 1000 charater string
+                {
+                    character=character+a.charAt(rand.nextInt(26));
+                    
+                }
+                i++;
+                part=part+1;
+                allS[track]=x+"\n"+character+"\n"+part+"\n";
+                track++;
+                character="";//reset character
+            }
+            for(int i=0;i<track;i++)
+            {
+                if(all=="")
+                {all=allS[i];}
+                else
+                    all=all+allS[i];
+            }
+            fileR.writeUTF(all);
+            part=0;
+            for(int i=1;i<=numTuples;i++)//make table S as both unsorted array and hash
+            {
+                x=rand.nextInt(10);
+                i++;
+                for(int j =1;j<=1000;j++)
+                {
+                    character=character+a.charAt(rand.nextInt(26));
+                    
+                }
+                tableS1.put(x,character);
+                i++;
+                allS[track2]=x+"\n"+character+"\n"+part+"\n";
+                track2++;
+                character="";
+            }
+            //fileS1.write(tableS1);
+            for(int i=0;i<track2;i++)
+            {
+                if(all2=="")
+                {all2=allS[i];}
+                else
+                    all2=all2+allS[i];
+            }
+            fileS.writeUTF(all2);
+            //fileS1.writeUTF(tableS1.toString());
+            for(int i=1;i<=numTuples;i++)
+            {
+                tableR[i]=fileR.readLine();
+                //System.out.println(tableR[i]);
+                tableS[i]=fileS.readLine();
+            }
+            int l;
+            String here="";
+            for(int i=1;i<=numTuples;i++)
+            {
+                if(i%3==1)
+                {
+                    l=Integer.parseInt(tableR[i]);
+                    i++;
+                    here=(String) tableS[i];
+                    hash.put(l,here);
+                }
+            }
+            
+            //hash=fileS1.read();
+            long s=System.nanoTime();
+            for(int i=1;i<=numTuples;i++)//does equijoin on hash
+            {
+                    if(i%3==1)
+                    {
+                        if(hash.containsKey(Integer.parseInt(tableR[i])))
+                        {
+                            System.out.println(tableR[i]+"      S="+hash.get(tableR[i]));
+                            System.out.println(tableR[i+1]);
+                            System.out.println(tableR[i+2]);
+                        }
+                    }
+            }
+            long f=System.nanoTime();
+            long time=f-s;//measure time for equijoin on hash
+            System.out.println("time for hash is "+time+ " nanoseconds");
+            System.out.println();
+            System.out.println();
+            s=System.nanoTime();
+            for(int i=1;i<=numTuples;i++)//does equijoin on unsorted
+            {
+                for(int j=1;j<=numTuples;j++)
+                {
+                    if(i%3==1&&j%3==1)
+                    {
+                        if(tableR[i].equals(tableS[j]))
+                        {
+                            System.out.println(tableR[i]+"      S="+tableS[j]);
+                            System.out.println(tableR[i+1]+"      S="+tableS[j+1]);
+                            System.out.println(tableR[i+2]+"      S="+tableS[j+2]);
+                        }
+                    }
+                }
+            }
+            f=System.nanoTime();
+            time=f-s;//measure time for equijoin on unsorted
+            System.out.println("time for 2 unsorted arrays is "+time+ " nanoseconds");
+       }
+       catch(FileNotFoundException e)
+       {
+           System.out.println("file not found");
+       }
+       catch(IOException e)
+       {
+           System.out.println("end of program");
+        }
+    }
+}
